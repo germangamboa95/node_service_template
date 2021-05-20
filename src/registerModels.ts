@@ -1,3 +1,3 @@
-import { SampleModel } from "./Modules/SampleModule.ts"
+import { SampleModel } from "./Modules"
 
 export const loadModels = [SampleModel]
