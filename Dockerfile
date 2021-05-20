@@ -7,7 +7,8 @@ RUN curl -sfL https://install.goreleaser.com/github.com/tj/node-prune.sh | bash 
 
 WORKDIR /usr/src/app
 
-COPY package*.json .
+COPY package*.json ./
+
 RUN npm install 
 
 COPY . .
@@ -25,8 +26,6 @@ WORKDIR /usr/src/app
 
 COPY --from=BUILD_IMAGE /usr/src/app/package.json ./package.json 
 COPY --from=BUILD_IMAGE /usr/src/app/build ./build
+COPY --from=BUILD_IMAGE /usr/src/app/src ./src
 COPY --from=BUILD_IMAGE /usr/src/app/node_modules ./node_modules
 
-EXPOSE 3000
-
-CMD [ "npm", "run", "production" ]

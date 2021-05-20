@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  database:
+    container_name: mysql
+    image: mysql:5.7
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+    ports:
+      - "3344:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+  migrations:
+    build:
+      context: .
+      dockerfile: Dockerfile.migration
+    volumes:
+      - .:/usr/src/app
+    command: "npm run typeorm migration:run"
