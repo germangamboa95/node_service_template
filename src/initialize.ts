@@ -1,5 +1,6 @@
 import "reflect-metadata"
 import { createConnection } from "typeorm"
+import { connection } from "./database"
 import { queue_manager, worker_manager } from "./Jobs"
 import { loadModels } from "./registerModels"
 import { HttpServer } from "./server"
@@ -22,16 +23,7 @@ export const start = async (opts = defaultApplicationOpts) => {
     ...opts,
   }
 
-  const connection = await createConnection({
-    type: "mysql",
-    host: "localhost",
-    port: 3306,
-    username: "test",
-    password: "test",
-    database: "test",
-    logging: false,
-    entities: loadModels,
-  })
+  await connection
 
   if (opts.http_server) {
     new HttpServer().start(3000)
